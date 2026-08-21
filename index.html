@@ -1,0 +1,709 @@
+
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Diogo Coelho — Designer Gráfico</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,900;1,9..144,500;1,9..144,900&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#170B2E;
+    --bg-alt:#20123F;
+    --bg-alt2:#2A1750;
+    --cream:#FCF3E1;
+    --cream-dim:#D9CDB8;
+    --scarlet:#F1502F;
+    --sun:#FFC53D;
+    --turquoise:#21B7AE;
+    --leaf:#57B85B;
+    --violet:#8B5CF6;
+    --max:1180px;
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+
+  html{scroll-behavior:smooth;}
+
+  body{
+    background:var(--bg);
+    color:var(--cream);
+    font-family:'Work Sans',sans-serif;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3,.display{
+    font-family:'Fraunces',serif;
+    font-weight:900;
+    letter-spacing:-0.01em;
+  }
+
+  a{color:inherit;}
+
+  ::selection{background:var(--sun);color:var(--bg);}
+
+  /* ---------- NAV ---------- */
+  nav{
+    position:fixed;
+    top:0;left:0;right:0;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:1.6rem clamp(1.5rem,5vw,4rem);
+    z-index:100;
+    mix-blend-mode:normal;
+    pointer-events:none;
+  }
+  nav .brand{
+    font-family:'Fraunces',serif;
+    font-style:italic;
+    font-weight:600;
+    font-size:1.3rem;
+    color:var(--cream);
+    pointer-events:auto;
+  }
+  nav .links{
+    display:flex;
+    gap:2rem;
+    font-size:0.85rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    pointer-events:auto;
+  }
+  nav .links a{
+    text-decoration:none;
+    opacity:0.75;
+    transition:opacity .25s ease, color .25s ease;
+    position:relative;
+  }
+  nav .links a:hover{opacity:1;color:var(--sun);}
+  @media(max-width:640px){ nav .links{display:none;} }
+
+  /* ---------- HERO / PARALLAX FEATHERS ---------- */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    background:
+      radial-gradient(ellipse at 50% 20%, #2A1750 0%, var(--bg) 60%);
+  }
+
+  .feather-layer{
+    position:absolute;
+    top:50%;left:50%;
+    width:1400px;
+    height:1400px;
+    transform:translate(-50%,-50%);
+    pointer-events:none;
+    will-change:transform;
+  }
+
+  .feather{
+    position:absolute;
+    top:50%;left:50%;
+    transform-origin:50% 100%;
+  }
+
+  .hero-content{
+    position:relative;
+    z-index:5;
+    text-align:center;
+    padding:0 1.5rem;
+  }
+
+  .hero-eyebrow{
+    display:inline-block;
+    font-size:0.8rem;
+    letter-spacing:0.25em;
+    text-transform:uppercase;
+    color:var(--sun);
+    margin-bottom:1.4rem;
+  }
+
+  .hero h1{
+    font-size:clamp(2.6rem,9vw,7rem);
+    line-height:0.98;
+    color:var(--cream);
+  }
+  .hero h1 em{
+    font-style:italic;
+    font-weight:500;
+    background:linear-gradient(100deg,var(--scarlet),var(--sun) 35%,var(--turquoise) 70%,var(--leaf));
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+  }
+
+  .hero p.sub{
+    margin-top:1.6rem;
+    font-size:clamp(1rem,2vw,1.25rem);
+    color:var(--cream-dim);
+    max-width:38ch;
+    margin-left:auto;
+    margin-right:auto;
+    font-weight:300;
+  }
+
+  .scroll-cue{
+    position:absolute;
+    bottom:2.4rem;
+    left:50%;
+    transform:translateX(-50%);
+    font-size:0.75rem;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:var(--cream-dim);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:0.6rem;
+  }
+  .scroll-cue::after{
+    content:"";
+    width:1px;height:34px;
+    background:linear-gradient(var(--sun),transparent);
+    animation:scrollpulse 1.8s ease-in-out infinite;
+  }
+  @keyframes scrollpulse{
+    0%{opacity:0.2;transform:scaleY(0.4);}
+    50%{opacity:1;transform:scaleY(1);}
+    100%{opacity:0.2;transform:scaleY(0.4);}
+  }
+
+  /* ---------- SECTION SHELL ---------- */
+  section{
+    position:relative;
+    padding:clamp(5rem,10vw,9rem) clamp(1.5rem,6vw,4rem);
+  }
+  .wrap{max-width:var(--max);margin:0 auto;}
+
+  .eyebrow{
+    font-size:0.8rem;
+    letter-spacing:0.25em;
+    text-transform:uppercase;
+    color:var(--turquoise);
+    margin-bottom:1rem;
+    display:block;
+  }
+
+  /* ---------- ABOUT ---------- */
+  .about{
+    background:var(--bg-alt);
+  }
+  .about .grid{
+    display:grid;
+    grid-template-columns:1.1fr 0.9fr;
+    gap:clamp(2rem,6vw,5rem);
+    align-items:center;
+  }
+  @media(max-width:840px){ .about .grid{grid-template-columns:1fr;} }
+
+  .about h2{
+    font-size:clamp(1.9rem,4.5vw,3.2rem);
+    line-height:1.1;
+    font-weight:600;
+    color:var(--cream);
+  }
+  .about h2 .accent{color:var(--sun);font-style:italic;font-weight:500;}
+
+  .about p{
+    margin-top:1.4rem;
+    color:var(--cream-dim);
+    font-weight:300;
+    font-size:1.05rem;
+    line-height:1.75;
+    max-width:52ch;
+  }
+
+  .about-visual{
+    position:relative;
+    aspect-ratio:1/1;
+    border-radius:50%;
+    background:conic-gradient(from 200deg,var(--scarlet),var(--sun),var(--turquoise),var(--leaf),var(--violet),var(--scarlet));
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    max-width:380px;
+    margin:0 auto;
+  }
+  .about-visual::before{
+    content:"";
+    position:absolute;
+    inset:14px;
+    border-radius:50%;
+    background:var(--bg-alt);
+  }
+  .about-visual svg{position:relative;z-index:2;width:46%;height:46%;}
+
+  .skills{
+    display:flex;
+    flex-wrap:wrap;
+    gap:0.6rem;
+    margin-top:2rem;
+  }
+  .skills span{
+    font-size:0.8rem;
+    padding:0.5rem 1rem;
+    border-radius:999px;
+    border:1px solid rgba(252,243,225,0.18);
+    color:var(--cream-dim);
+  }
+
+  /* ---------- PORTFOLIO ---------- */
+  .portfolio{background:var(--bg);}
+
+  .portfolio-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:2rem;
+    flex-wrap:wrap;
+    margin-bottom:3rem;
+  }
+  .portfolio-head h2{
+    font-size:clamp(2rem,5vw,3.4rem);
+    color:var(--cream);
+  }
+  .portfolio-head p{
+    color:var(--cream-dim);
+    font-weight:300;
+    max-width:34ch;
+  }
+
+  .grid-work{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:1.4rem;
+  }
+  @media(max-width:960px){ .grid-work{grid-template-columns:repeat(2,1fr);} }
+  @media(max-width:600px){ .grid-work{grid-template-columns:1fr;} }
+
+  .card{
+    position:relative;
+    border-radius:18px;
+    overflow:hidden;
+    cursor:pointer;
+    aspect-ratio:4/5;
+    background:#000;
+    border:1px solid rgba(252,243,225,0.08);
+  }
+  .card .thumb{
+    position:absolute;inset:0;
+    display:flex;
+    align-items:flex-end;
+    padding:1.4rem;
+    transition:transform .55s cubic-bezier(.2,.8,.2,1);
+  }
+  .card:hover .thumb{transform:scale(1.06);}
+
+  .card .thumb-tag{
+    font-size:0.7rem;
+    letter-spacing:0.15em;
+    text-transform:uppercase;
+    color:rgba(23,11,46,0.65);
+    font-weight:600;
+  }
+  .card .thumb-title{
+    font-family:'Fraunces',serif;
+    font-weight:600;
+    font-size:1.4rem;
+    color:var(--bg);
+    margin-top:0.3rem;
+  }
+
+  .card .expand{
+    position:absolute;
+    top:1rem;right:1rem;
+    width:38px;height:38px;
+    border-radius:50%;
+    background:rgba(23,11,46,0.35);
+    backdrop-filter:blur(6px);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--cream);
+    font-size:1.1rem;
+    transition:background .25s ease, transform .3s ease;
+  }
+  .card:hover .expand{background:rgba(23,11,46,0.6);transform:rotate(45deg);}
+
+  /* ---------- LIGHTBOX ---------- */
+  .lightbox{
+    position:fixed;inset:0;
+    background:rgba(11,5,25,0.92);
+    backdrop-filter:blur(10px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:1000;
+    opacity:0;
+    pointer-events:none;
+    transition:opacity .35s ease;
+    padding:2rem;
+  }
+  .lightbox.active{opacity:1;pointer-events:auto;}
+
+  .lightbox-inner{
+    max-width:900px;
+    width:100%;
+    transform:translateY(24px) scale(0.97);
+    transition:transform .4s cubic-bezier(.2,.8,.2,1);
+  }
+  .lightbox.active .lightbox-inner{transform:translateY(0) scale(1);}
+
+  .lightbox-frame{
+    aspect-ratio:16/10;
+    border-radius:20px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:2rem;
+    position:relative;
+    overflow:hidden;
+  }
+  .lightbox-frame img{
+    position:absolute;inset:0;
+    width:100%;height:100%;
+    object-fit:cover;
+  }
+  .lightbox-frame .placeholder-note{
+    position:relative;
+    z-index:2;
+    color:rgba(23,11,46,0.75);
+    font-size:0.95rem;
+    max-width:32ch;
+    font-weight:500;
+    line-height:1.5;
+  }
+
+  .lightbox-meta{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-top:1.4rem;
+    gap:1rem;
+    flex-wrap:wrap;
+  }
+  .lightbox-meta h3{
+    font-size:1.6rem;
+    color:var(--cream);
+  }
+  .lightbox-meta .cat{
+    color:var(--sun);
+    font-size:0.85rem;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    margin-top:0.3rem;
+    display:block;
+  }
+
+  .lightbox-close{
+    background:none;
+    border:1px solid rgba(252,243,225,0.3);
+    color:var(--cream);
+    width:42px;height:42px;
+    border-radius:50%;
+    font-size:1.2rem;
+    cursor:pointer;
+    flex-shrink:0;
+    transition:background .25s ease, transform .25s ease;
+  }
+  .lightbox-close:hover{background:rgba(252,243,225,0.12);transform:rotate(90deg);}
+
+  /* ---------- FEATHER DIVIDER ---------- */
+  .divider{
+    height:120px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    overflow:hidden;
+    background:var(--bg-alt2);
+  }
+
+  /* ---------- CONTACT ---------- */
+  .contact{
+    background:var(--bg-alt2);
+    text-align:center;
+  }
+  .contact .eyebrow{color:var(--leaf);justify-content:center;display:block;text-align:center;}
+  .contact h2{
+    font-size:clamp(2.2rem,7vw,5rem);
+    line-height:1.02;
+  }
+  .contact h2 em{
+    font-style:italic;
+    font-weight:500;
+    color:var(--sun);
+  }
+  .contact .cta{
+    display:inline-flex;
+    align-items:center;
+    gap:0.7rem;
+    margin-top:2.2rem;
+    padding:1rem 2.2rem;
+    border-radius:999px;
+    background:var(--scarlet);
+    color:var(--cream);
+    text-decoration:none;
+    font-weight:600;
+    font-size:1rem;
+    transition:transform .3s ease, background .3s ease;
+  }
+  .contact .cta:hover{transform:translateY(-3px);background:var(--sun);color:var(--bg);}
+
+  footer{
+    padding:2.4rem clamp(1.5rem,6vw,4rem);
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-size:0.8rem;
+    color:var(--cream-dim);
+    flex-wrap:wrap;
+    gap:1rem;
+    background:var(--bg-alt2);
+  }
+  footer .socials{display:flex;gap:1.2rem;}
+  footer a{text-decoration:none;opacity:0.75;transition:opacity .2s ease;}
+  footer a:hover{opacity:1;color:var(--turquoise);}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important;}
+    .feather-layer{transform:none !important;}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="brand">Diogo Coelho</div>
+  <div class="links">
+    <a href="#sobre">Sobre</a>
+    <a href="#trabalhos">Trabalhos</a>
+    <a href="#contacto">Contacto</a>
+  </div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="topo">
+  <div class="feather-layer" id="layerBack" data-speed="0.15"></div>
+  <div class="feather-layer" id="layerMid" data-speed="0.32"></div>
+  <div class="feather-layer" id="layerFront" data-speed="0.5"></div>
+
+  <div class="hero-content">
+    <span class="hero-eyebrow">Design gráfico &amp; identidade visual</span>
+    <h1>Cor com<br><em>intenção.</em></h1>
+    <p class="sub">Sou designer gráfico e trabalho a paleta como um papagaio trabalha a plumagem: cada cor tem um propósito, não um acaso.</p>
+  </div>
+
+  <div class="scroll-cue">Desliza</div>
+</section>
+
+<!-- ============ SOBRE ============ -->
+<section class="about" id="sobre">
+  <div class="wrap grid">
+    <div>
+      <span class="eyebrow">Sobre mim</span>
+      <h2>Fotomontagens, marcas e páginas que <span class="accent">não passam despercebidas.</span></h2>
+      <p>Trabalho identidade visual, fotomontagem e design editorial. Gosto de composições que arriscam na cor — inspiro-me muito no meu papagaio de estimação e na forma como as suas penas combinam tons que, à partida, ninguém juntaria.</p>
+      <div class="skills">
+        <span>Identidade Visual</span>
+        <span>Fotomontagem</span>
+        <span>Design Editorial</span>
+        <span>Direção de Arte</span>
+        <span>Ilustração Digital</span>
+      </div>
+    </div>
+    <div class="about-visual">
+      <svg viewBox="0 0 100 100" fill="none">
+        <path d="M50 8 C30 8 18 26 18 46 C18 66 32 82 50 92 C68 82 82 66 82 46 C82 26 70 8 50 8 Z" fill="#FCF3E1" opacity="0.9"/>
+        <circle cx="50" cy="42" r="7" fill="#170B2E"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TRABALHOS ============ -->
+<section class="portfolio" id="trabalhos">
+  <div class="wrap">
+    <div class="portfolio-head">
+      <div>
+        <span class="eyebrow">Portefólio</span>
+        <h2>Trabalhos selecionados</h2>
+      </div>
+      <p>Clica em qualquer peça para abrir a montagem em destaque.</p>
+    </div>
+
+    <div class="grid-work" id="grid-work"></div>
+  </div>
+</section>
+
+<div class="divider">
+  <svg width="100%" height="80" viewBox="0 0 1200 80" preserveAspectRatio="none">
+    <path d="M0 40 Q 150 5, 300 40 T 600 40 T 900 40 T 1200 40" stroke="url(#divGrad)" stroke-width="2" fill="none" opacity="0.5"/>
+    <defs>
+      <linearGradient id="divGrad" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#F1502F"/>
+        <stop offset="33%" stop-color="#FFC53D"/>
+        <stop offset="66%" stop-color="#21B7AE"/>
+        <stop offset="100%" stop-color="#57B85B"/>
+      </linearGradient>
+    </defs>
+  </svg>
+</div>
+
+<!-- ============ CONTACTO ============ -->
+<section class="contact" id="contacto">
+  <div class="wrap">
+    <span class="eyebrow">Vamos falar</span>
+    <h2>Tens um projeto <em>com cor</em> em mente?</h2>
+    <a class="cta" href="mailto:ola@teudominio.pt">Escrever um email →</a>
+  </div>
+</section>
+
+<footer>
+  <span>© 2026 · Designer Gráfico</span>
+  <div class="socials">
+    <a href="#">Instagram</a>
+    <a href="#">Behance</a>
+    <a href="#">LinkedIn</a>
+  </div>
+</footer>
+
+<!-- ============ LIGHTBOX ============ -->
+<div class="lightbox" id="lightbox">
+  <div class="lightbox-inner">
+    <div class="lightbox-frame" id="lightboxFrame"></div>
+    <div class="lightbox-meta">
+      <div>
+        <h3 id="lightboxTitle"></h3>
+        <span class="cat" id="lightboxCat"></span>
+      </div>
+      <button class="lightbox-close" id="lightboxClose" aria-label="Fechar">✕</button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* =====================================================================
+   👉 OS TEUS TRABALHOS
+   Edita este array para adicionares os teus projetos reais.
+   - title: título do trabalho
+   - cat: categoria (ex: "Identidade Visual", "Fotomontagem"...)
+   - color: cor de fundo do thumbnail (usa uma das cores da paleta, ou outra)
+   - img: caminho para a tua imagem (ex: "trabalhos/projeto1.jpg").
+          Deixa como null enquanto não tiveres a imagem — aparece um
+          placeholder colorido no lugar, para veres o layout a funcionar.
+   ===================================================================== */
+const PROJETOS = [
+  { title:"Voo Tropical",     cat:"Identidade Visual", color:"#FFC53D", img:"trabalhos/projeto1.jpg" },
+  { title:"Selva Urbana",     cat:"Fotomontagem",       color:"#F1502F", img:"trabalhos/projeto2.png" },
+  { title:"Plumagem",         cat:"Design Editorial",   color:"#21B7AE", img:"trabalhos/projeto3.jpg" },
+  { title:"Bico de Ouro",     cat:"Direção de Arte",    color:"#57B85B", img:"trabalhos/projeto4.jpg" },
+  { title:"Asas Abertas",     cat:"Fotomontagem",       color:"#8B5CF6", img:null },
+  { title:"Ninho",            cat:"Identidade Visual",  color:"#FFC53D", img:null },
+];
+
+const grid = document.getElementById('grid-work');
+
+PROJETOS.forEach((p, i) => {
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.innerHTML = `
+    <div class="thumb" style="background:${p.img ? `#000 url('${p.img}') center/cover no-repeat` : p.color};">
+      <div>
+        <span class="thumb-tag">${p.cat}</span>
+        <div class="thumb-title">${p.title}</div>
+      </div>
+    </div>
+    <div class="expand">＋</div>
+  `;
+  card.addEventListener('click', () => openLightbox(i));
+  grid.appendChild(card);
+});
+
+const lightbox = document.getElementById('lightbox');
+const lightboxFrame = document.getElementById('lightboxFrame');
+const lightboxTitle = document.getElementById('lightboxTitle');
+const lightboxCat = document.getElementById('lightboxCat');
+const lightboxClose = document.getElementById('lightboxClose');
+
+function openLightbox(i){
+  const p = PROJETOS[i];
+  lightboxFrame.style.background = p.color;
+  lightboxFrame.innerHTML = p.img
+    ? `<img src="${p.img}" alt="${p.title}">`
+    : `<span class="placeholder-note">Substitui este espaço pela tua montagem — define "img" no array PROJETOS.</span>`;
+  lightboxTitle.textContent = p.title;
+  lightboxCat.textContent = p.cat;
+  lightbox.classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox(){
+  lightbox.classList.remove('active');
+  document.body.style.overflow = '';
+}
+lightboxClose.addEventListener('click', closeLightbox);
+lightbox.addEventListener('click', e => { if(e.target === lightbox) closeLightbox(); });
+document.addEventListener('keydown', e => { if(e.key === 'Escape') closeLightbox(); });
+
+/* =====================================================================
+   PENAS PARALLAX — camadas de "penas" de papagaio atrás do título,
+   cada camada move-se a uma velocidade diferente no scroll.
+   ===================================================================== */
+function makeFeatherFan(colors, count, radius, opacity){
+  let svg = `<svg width="1400" height="1400" viewBox="0 0 1400 1400" style="position:absolute;top:0;left:0;opacity:${opacity}">`;
+  const cx = 700, cy = 900;
+  for(let i=0;i<count;i++){
+    const angle = -90 + (i - (count-1)/2) * (100/(count-1));
+    const rad = angle * Math.PI/180;
+    const len = radius;
+    const tipX = cx + Math.sin(rad)*len;
+    const tipY = cy - Math.cos(rad)*len;
+    const widthOffset = 34;
+    const perpX = Math.cos(rad)*widthOffset;
+    const perpY = Math.sin(rad)*widthOffset;
+    const c = colors[i % colors.length];
+    svg += `<path d="M${cx-perpX} ${cy-perpY} Q${cx} ${cy-len*0.55} ${tipX} ${tipY} Q${cx} ${cy-len*0.55} ${cx+perpX} ${cy+perpY} Z" fill="${c}"/>`;
+  }
+  svg += `</svg>`;
+  return svg;
+}
+
+document.getElementById('layerBack').innerHTML = makeFeatherFan(
+  ['#8B5CF6','#21B7AE','#2A1750'], 9, 780, 0.35
+);
+document.getElementById('layerMid').innerHTML = makeFeatherFan(
+  ['#F1502F','#FFC53D','#57B85B'], 7, 620, 0.5
+);
+document.getElementById('layerFront').innerHTML = makeFeatherFan(
+  ['#FFC53D','#F1502F'], 5, 460, 0.65
+);
+
+const layers = document.querySelectorAll('.feather-layer');
+const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+if(!reduceMotion){
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if(!ticking){
+      window.requestAnimationFrame(() => {
+        const y = window.scrollY;
+        layers.forEach(layer => {
+          const speed = parseFloat(layer.dataset.speed);
+          layer.style.transform = `translate(-50%, calc(-50% + ${y*speed}px)) rotate(${y*speed*0.02}deg)`;
+        });
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+}
+</script>
+
+</body>
+</html>
