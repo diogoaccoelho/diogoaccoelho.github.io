@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="pt">
 <head>
@@ -7,7 +6,7 @@
 <title>Diogo Coelho — Designer Gráfico</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,900;1,9..144,500;1,9..144,900&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;0,6..96,700;0,6..96,800;0,6..96,900;1,6..96,400;1,6..96,500;1,6..96,600;1,6..96,700&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#170B2E;
@@ -36,8 +35,8 @@
   }
 
   h1,h2,h3,.display{
-    font-family:'Fraunces',serif;
-    font-weight:900;
+    font-family:'Bodoni Moda',serif;
+    font-weight:700;
     letter-spacing:-0.01em;
   }
 
@@ -54,14 +53,13 @@
     align-items:center;
     padding:1.6rem clamp(1.5rem,5vw,4rem);
     z-index:100;
-    mix-blend-mode:normal;
     pointer-events:none;
   }
   nav .brand{
-    font-family:'Fraunces',serif;
+    font-family:'Bodoni Moda',serif;
     font-style:italic;
-    font-weight:600;
-    font-size:1.3rem;
+    font-weight:500;
+    font-size:1.4rem;
     color:var(--cream);
     pointer-events:auto;
   }
@@ -82,98 +80,211 @@
   nav .links a:hover{opacity:1;color:var(--sun);}
   @media(max-width:640px){ nav .links{display:none;} }
 
-  /* ---------- HERO / PARALLAX FEATHERS ---------- */
+  /* ---------- HERO ---------- */
   .hero{
     position:relative;
     min-height:100vh;
     display:flex;
-    align-items:center;
+    flex-direction:column;
     justify-content:center;
     overflow:hidden;
-    background:
-      radial-gradient(ellipse at 50% 20%, #2A1750 0%, var(--bg) 60%);
+    background:var(--bg);
+    padding:7rem 0 0;
   }
 
-  .feather-layer{
+  .hero-swatches{
     position:absolute;
-    top:50%;left:50%;
-    width:1400px;
-    height:1400px;
-    transform:translate(-50%,-50%);
+    inset:0;
+    z-index:0;
+    overflow:hidden;
     pointer-events:none;
-    will-change:transform;
   }
-
-  .feather{
+  .hero-swatches .chip{
     position:absolute;
-    top:50%;left:50%;
-    transform-origin:50% 100%;
+    border-radius:14px;
+    box-shadow:0 22px 40px -14px rgba(0,0,0,0.5);
+    transform:rotate(var(--r,0deg)) translateY(var(--ty,0px));
+    background:var(--c);
   }
 
-  .hero-content{
+  .hero-scrim{
+    position:absolute;
+    inset:0;
+    z-index:1;
+    background:linear-gradient(180deg, rgba(23,11,46,0.5) 0%, rgba(23,11,46,0.85) 58%, var(--bg) 100%);
+  }
+
+  .hero-inner{
     position:relative;
     z-index:5;
-    text-align:center;
-    padding:0 1.5rem;
+    max-width:var(--max);
+    margin:0 auto;
+    width:100%;
+    padding:0 clamp(1.5rem,6vw,4rem) 3rem;
   }
 
-  .hero-eyebrow{
-    display:inline-block;
-    font-size:0.8rem;
-    letter-spacing:0.25em;
-    text-transform:uppercase;
-    color:var(--sun);
-    margin-bottom:1.4rem;
+  .hero-topbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    gap:0.8rem;
+    margin-bottom:clamp(2rem,6vw,3.5rem);
   }
-
-  .hero h1{
-    font-size:clamp(2.6rem,9vw,7rem);
-    line-height:0.98;
-    color:var(--cream);
-  }
-  .hero h1 em{
-    font-style:italic;
-    font-weight:500;
-    background:linear-gradient(100deg,var(--scarlet),var(--sun) 35%,var(--turquoise) 70%,var(--leaf));
-    -webkit-background-clip:text;
-    background-clip:text;
-    color:transparent;
-  }
-
-  .hero p.sub{
-    margin-top:1.6rem;
-    font-size:clamp(1rem,2vw,1.25rem);
-    color:var(--cream-dim);
-    max-width:38ch;
-    margin-left:auto;
-    margin-right:auto;
-    font-weight:300;
-  }
-
-  .scroll-cue{
-    position:absolute;
-    bottom:2.4rem;
-    left:50%;
-    transform:translateX(-50%);
-    font-size:0.75rem;
-    letter-spacing:0.2em;
+  .hero-tag{
+    font-size:0.78rem;
+    letter-spacing:0.18em;
     text-transform:uppercase;
     color:var(--cream-dim);
     display:flex;
-    flex-direction:column;
     align-items:center;
-    gap:0.6rem;
+    gap:0.5rem;
   }
-  .scroll-cue::after{
-    content:"";
-    width:1px;height:34px;
-    background:linear-gradient(var(--sun),transparent);
-    animation:scrollpulse 1.8s ease-in-out infinite;
+  .hero-tag .dot{
+    width:7px;height:7px;
+    border-radius:50%;
+    background:var(--leaf);
+    display:inline-block;
   }
-  @keyframes scrollpulse{
-    0%{opacity:0.2;transform:scaleY(0.4);}
-    50%{opacity:1;transform:scaleY(1);}
-    100%{opacity:0.2;transform:scaleY(0.4);}
+
+  .hero-title{
+    font-size:clamp(3.2rem,11vw,8rem);
+    line-height:0.92;
+    color:var(--cream);
+  }
+  .hero-title .line{
+    display:block;
+  }
+  .hero-title .l1{color:var(--scarlet);}
+  .hero-title .l2{color:var(--cream);}
+  .hero-title .l3{
+    font-style:italic;
+    font-weight:500;
+    color:var(--turquoise);
+  }
+
+  .hero-main{
+    display:grid;
+    grid-template-columns:1.25fr 0.95fr;
+    gap:clamp(2rem,5vw,4.5rem);
+    align-items:end;
+    margin-top:clamp(1.5rem,4vw,2.5rem);
+  }
+
+  .hero-side{
+    display:flex;
+    flex-direction:column;
+    gap:1.6rem;
+  }
+  .hero-intro{
+    font-size:1.05rem;
+    line-height:1.75;
+    color:var(--cream-dim);
+    font-weight:300;
+    max-width:44ch;
+  }
+
+  .hero-cta-row{
+    display:flex;
+    gap:1rem;
+    flex-wrap:wrap;
+  }
+  .btn-solid,.btn-ghost{
+    display:inline-flex;
+    align-items:center;
+    gap:0.5rem;
+    padding:0.85rem 1.6rem;
+    border-radius:999px;
+    font-size:0.9rem;
+    font-weight:600;
+    text-decoration:none;
+    transition:transform .3s ease, background .3s ease, color .3s ease;
+  }
+  .btn-solid{
+    background:var(--sun);
+    color:var(--bg);
+  }
+  .btn-solid:hover{background:var(--scarlet);color:var(--cream);transform:translateY(-2px);}
+  .btn-ghost{
+    border:1px solid rgba(252,243,225,0.35);
+    color:var(--cream);
+  }
+  .btn-ghost:hover{background:rgba(252,243,225,0.1);transform:translateY(-2px);}
+
+  .hero-stats{
+    display:flex;
+    gap:clamp(1.5rem,4vw,2.8rem);
+    flex-wrap:wrap;
+    margin-top:0.4rem;
+  }
+  .hero-stats div{display:flex;flex-direction:column;gap:0.25rem;}
+  .hero-stats dt{
+    font-family:'Bodoni Moda',serif;
+    font-weight:700;
+    font-size:2rem;
+    color:var(--sun);
+  }
+  .hero-stats dd{
+    font-size:0.75rem;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--cream-dim);
+  }
+
+  .hero-chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:0.7rem;
+    margin-top:clamp(2rem,5vw,3rem);
+  }
+  .hero-chips span{
+    font-size:0.82rem;
+    font-weight:600;
+    padding:0.55rem 1.1rem;
+    border-radius:10px;
+    color:var(--bg);
+    background:var(--c);
+    transform:rotate(var(--r,0deg));
+    box-shadow:0 10px 20px -10px rgba(0,0,0,0.5);
+  }
+
+  .hero-marquee{
+    position:relative;
+    z-index:5;
+    overflow:hidden;
+    border-top:1px solid rgba(252,243,225,0.15);
+    border-bottom:1px solid rgba(252,243,225,0.15);
+    padding:1.1rem 0;
+    background:rgba(23,11,46,0.55);
+    backdrop-filter:blur(4px);
+  }
+  .marquee-track{
+    display:flex;
+    width:max-content;
+    white-space:nowrap;
+    animation:marqueeScroll 32s linear infinite;
+  }
+  .marquee-track span{
+    font-family:'Bodoni Moda',serif;
+    font-style:italic;
+    font-weight:500;
+    font-size:clamp(1.2rem,3vw,1.9rem);
+    padding:0 1.4rem;
+  }
+  .marquee-track span:nth-child(6n+1){color:var(--scarlet);}
+  .marquee-track span:nth-child(6n+2){color:var(--sun);}
+  .marquee-track span:nth-child(6n+3){color:var(--turquoise);}
+  .marquee-track span:nth-child(6n+4){color:var(--leaf);}
+  .marquee-track span:nth-child(6n+5){color:var(--violet);}
+  .marquee-track span:nth-child(6n+6){color:var(--cream);}
+  @keyframes marqueeScroll{
+    0%{transform:translateX(0);}
+    100%{transform:translateX(-50%);}
+  }
+
+  @media(max-width:840px){
+    .hero-main{grid-template-columns:1fr;}
+    .hero{padding-top:6.5rem;}
   }
 
   /* ---------- SECTION SHELL ---------- */
@@ -310,11 +421,17 @@
     font-weight:600;
   }
   .card .thumb-title{
-    font-family:'Fraunces',serif;
+    font-family:'Bodoni Moda',serif;
     font-weight:600;
     font-size:1.4rem;
     color:var(--bg);
     margin-top:0.3rem;
+  }
+
+  .card.has-img .thumb-tag,
+  .card.has-img .thumb-title{
+    color:var(--cream);
+    text-shadow:0 2px 12px rgba(0,0,0,0.55);
   }
 
   .card .expand{
@@ -356,21 +473,55 @@
   .lightbox.active .lightbox-inner{transform:translateY(0) scale(1);}
 
   .lightbox-frame{
-    aspect-ratio:16/10;
     border-radius:20px;
     display:flex;
     align-items:center;
     justify-content:center;
     text-align:center;
-    padding:2rem;
+    padding:clamp(0.9rem,4vw,2.2rem);
     position:relative;
     overflow:hidden;
   }
+  /* only the "no image yet" placeholder needs a fixed shape — a real photo defines its own proportions */
+  .lightbox-frame.placeholder{aspect-ratio:16/10;}
+
   .lightbox-frame img{
-    position:absolute;inset:0;
-    width:100%;height:100%;
-    object-fit:cover;
+    display:block;
+    max-width:100%;
+    max-height:min(74vh,740px);
+    width:auto;
+    height:auto;
+    object-fit:contain;
+    border-radius:10px;
+    box-shadow:0 24px 60px rgba(0,0,0,0.4);
+    cursor:zoom-in;
+    transition:transform .3s ease;
   }
+  .lightbox-frame img.is-zoomed{
+    cursor:zoom-out;
+    transform:scale(2.3);
+    transition:transform .08s linear;
+    border-radius:4px;
+  }
+
+  .zoom-hint{
+    position:absolute;
+    left:1.6rem;
+    bottom:1.6rem;
+    font-size:0.72rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--cream);
+    background:rgba(23,11,46,0.6);
+    backdrop-filter:blur(6px);
+    padding:0.5rem 0.9rem;
+    border-radius:999px;
+    pointer-events:none;
+    transition:opacity .25s ease;
+    z-index:3;
+  }
+  .zoom-hint.hidden{opacity:0;}
+
   .lightbox-frame .placeholder-note{
     position:relative;
     z-index:2;
@@ -414,6 +565,11 @@
     transition:background .25s ease, transform .25s ease;
   }
   .lightbox-close:hover{background:rgba(252,243,225,0.12);transform:rotate(90deg);}
+
+  @media(max-width:640px){
+    .lightbox{padding:1rem;}
+    .lightbox-meta h3{font-size:1.25rem;}
+  }
 
   /* ---------- FEATHER DIVIDER ---------- */
   .divider{
@@ -473,7 +629,7 @@
 
   @media (prefers-reduced-motion: reduce){
     *{animation:none !important; transition:none !important;}
-    .feather-layer{transform:none !important;}
+    .hero-swatches .chip{transform:rotate(var(--r,0deg)) !important;}
   }
 </style>
 </head>
@@ -490,17 +646,66 @@
 
 <!-- ============ HERO ============ -->
 <section class="hero" id="topo">
-  <div class="feather-layer" id="layerBack" data-speed="0.15"></div>
-  <div class="feather-layer" id="layerMid" data-speed="0.32"></div>
-  <div class="feather-layer" id="layerFront" data-speed="0.5"></div>
+  <div class="hero-swatches" id="heroSwatches">
+    <span class="chip" style="--c:var(--scarlet); width:120px; height:150px; top:4%; left:2%; --r:-9deg;" data-depth="0.06"></span>
+    <span class="chip" style="--c:var(--sun); width:70px; height:90px; top:2%; left:16%; --r:6deg;" data-depth="0.1"></span>
+    <span class="chip" style="--c:var(--turquoise); width:96px; height:56px; top:9%; left:27%; --r:-4deg;" data-depth="0.04"></span>
+    <span class="chip" style="--c:var(--cream); width:38px; height:38px; top:18%; left:9%; --r:18deg;" data-depth="0.12"></span>
+    <span class="chip" style="--c:var(--leaf); width:82px; height:104px; top:3%; right:22%; --r:8deg;" data-depth="0.07"></span>
+    <span class="chip" style="--c:var(--violet); width:130px; height:160px; top:7%; right:8%; --r:-6deg;" data-depth="0.05"></span>
+    <span class="chip" style="--c:var(--cream); width:58px; height:58px; top:1%; right:0%; --r:12deg;" data-depth="0.09"></span>
+    <span class="chip" style="--c:var(--leaf); width:34px; height:34px; top:15%; right:16%; --r:-16deg;" data-depth="0.11"></span>
+    <span class="chip" style="--c:var(--sun); width:50px; height:190px; top:38%; left:0%; --r:2deg;" data-depth="0.03"></span>
+    <span class="chip" style="--c:var(--turquoise); width:55px; height:200px; top:34%; right:0%; --r:-2deg;" data-depth="0.03"></span>
+    <span class="chip" style="--c:var(--turquoise); width:100px; height:130px; bottom:5%; left:3%; --r:5deg;" data-depth="0.06"></span>
+    <span class="chip" style="--c:var(--scarlet); width:60px; height:80px; bottom:2%; left:17%; --r:-8deg;" data-depth="0.09"></span>
+    <span class="chip" style="--c:var(--sun); width:92px; height:52px; bottom:9%; left:31%; --r:3deg;" data-depth="0.05"></span>
+    <span class="chip" style="--c:var(--leaf); width:70px; height:100px; bottom:4%; right:27%; --r:-5deg;" data-depth="0.07"></span>
+    <span class="chip" style="--c:var(--violet); width:120px; height:150px; bottom:1%; right:12%; --r:9deg;" data-depth="0.06"></span>
+    <span class="chip" style="--c:var(--scarlet); width:80px; height:80px; bottom:7%; right:0%; --r:-3deg;" data-depth="0.08"></span>
+  </div>
+  <div class="hero-scrim"></div>
 
-  <div class="hero-content">
-    <span class="hero-eyebrow">Design gráfico &amp; identidade visual</span>
-    <h1>Cor com<br><em>intenção.</em></h1>
-    <p class="sub">Sou designer gráfico e trabalho a paleta como um papagaio trabalha a plumagem: cada cor tem um propósito, não um acaso.</p>
+  <div class="hero-inner">
+    <div class="hero-topbar">
+      <span class="hero-tag"><span class="dot"></span> Disponível para novos projetos</span>
+      <span class="hero-tag">Design gráfico &amp; identidade visual</span>
+    </div>
+
+    <div class="hero-main">
+      <h1 class="hero-title">
+        <span class="line l1">Cor</span>
+        <span class="line l2">com</span>
+        <span class="line l3">propósito.</span>
+      </h1>
+
+      <div class="hero-side">
+        <p class="hero-intro">Sou o Diogo — construo identidades visuais, fotomontagens e páginas editoriais para marcas que não têm medo de arriscar na paleta. Cada projeto começa com a mesma pergunta: que cor conta esta história?</p>
+        <div class="hero-cta-row">
+          <a href="#trabalhos" class="btn-solid">Ver trabalhos</a>
+          <a href="#contacto" class="btn-ghost">Fala comigo →</a>
+        </div>
+        <!-- 👉 Ajusta estes números às tuas estatísticas reais -->
+        <dl class="hero-stats">
+          <div><dt>8+</dt><dd>anos de experiência</dd></div>
+          <div><dt>60+</dt><dd>projetos entregues</dd></div>
+          <div><dt>24</dt><dd>marcas construídas</dd></div>
+        </dl>
+      </div>
+    </div>
+
+    <div class="hero-chips">
+      <span style="--c:var(--scarlet); --r:-3deg;">Identidade Visual</span>
+      <span style="--c:var(--sun); --r:2deg;">Fotomontagem</span>
+      <span style="--c:var(--turquoise); --r:-2deg;">Direção de Arte</span>
+      <span style="--c:var(--leaf); --r:3deg;">Design Editorial</span>
+      <span style="--c:var(--violet); --r:-4deg;">Branding</span>
+    </div>
   </div>
 
-  <div class="scroll-cue">Desliza</div>
+  <div class="hero-marquee">
+    <div class="marquee-track" id="marqueeTrack"></div>
+  </div>
 </section>
 
 <!-- ============ SOBRE ============ -->
@@ -535,7 +740,7 @@
         <span class="eyebrow">Portefólio</span>
         <h2>Trabalhos selecionados</h2>
       </div>
-      <p>Clica em qualquer peça para abrir a montagem em destaque.</p>
+      <p>Clica em qualquer peça para abrir a montagem em destaque — e volta a clicar na imagem para ampliar e ver os pormenores.</p>
     </div>
 
     <div class="grid-work" id="grid-work"></div>
@@ -612,7 +817,7 @@ const grid = document.getElementById('grid-work');
 
 PROJETOS.forEach((p, i) => {
   const card = document.createElement('div');
-  card.className = 'card';
+  card.className = 'card' + (p.img ? ' has-img' : '');
   card.innerHTML = `
     <div class="thumb" style="background:${p.img ? `#000 url('${p.img}') center/cover no-repeat` : p.color};">
       <div>
@@ -635,13 +840,42 @@ const lightboxClose = document.getElementById('lightboxClose');
 function openLightbox(i){
   const p = PROJETOS[i];
   lightboxFrame.style.background = p.color;
+  lightboxFrame.classList.toggle('placeholder', !p.img);
   lightboxFrame.innerHTML = p.img
-    ? `<img src="${p.img}" alt="${p.title}">`
+    ? `<img src="${p.img}" alt="${p.title}"><span class="zoom-hint">Clica para ampliar</span>`
     : `<span class="placeholder-note">Substitui este espaço pela tua montagem — define "img" no array PROJETOS.</span>`;
   lightboxTitle.textContent = p.title;
   lightboxCat.textContent = p.cat;
   lightbox.classList.add('active');
   document.body.style.overflow = 'hidden';
+
+  if(p.img){
+    const img = lightboxFrame.querySelector('img');
+    const hint = lightboxFrame.querySelector('.zoom-hint');
+    let zoomed = false;
+
+    function setOrigin(clientX, clientY){
+      const rect = img.getBoundingClientRect();
+      const x = Math.min(100, Math.max(0, ((clientX - rect.left) / rect.width) * 100));
+      const y = Math.min(100, Math.max(0, ((clientY - rect.top) / rect.height) * 100));
+      img.style.transformOrigin = `${x}% ${y}%`;
+    }
+
+    img.addEventListener('click', (e) => {
+      zoomed = !zoomed;
+      img.classList.toggle('is-zoomed', zoomed);
+      if(hint) hint.classList.toggle('hidden', zoomed);
+      if(zoomed){ setOrigin(e.clientX, e.clientY); }
+      else { img.style.transformOrigin = 'center center'; }
+    });
+    img.addEventListener('mousemove', (e) => { if(zoomed) setOrigin(e.clientX, e.clientY); });
+    img.addEventListener('touchmove', (e) => {
+      if(zoomed && e.touches[0]){
+        e.preventDefault();
+        setOrigin(e.touches[0].clientX, e.touches[0].clientY);
+      }
+    }, { passive:false });
+  }
 }
 function closeLightbox(){
   lightbox.classList.remove('active');
@@ -652,40 +886,19 @@ lightbox.addEventListener('click', e => { if(e.target === lightbox) closeLightbo
 document.addEventListener('keydown', e => { if(e.key === 'Escape') closeLightbox(); });
 
 /* =====================================================================
-   PENAS PARALLAX — camadas de "penas" de papagaio atrás do título,
-   cada camada move-se a uma velocidade diferente no scroll.
+   MARQUEE — faixa de texto a deslizar com as tuas especialidades
    ===================================================================== */
-function makeFeatherFan(colors, count, radius, opacity){
-  let svg = `<svg width="1400" height="1400" viewBox="0 0 1400 1400" style="position:absolute;top:0;left:0;opacity:${opacity}">`;
-  const cx = 700, cy = 900;
-  for(let i=0;i<count;i++){
-    const angle = -90 + (i - (count-1)/2) * (100/(count-1));
-    const rad = angle * Math.PI/180;
-    const len = radius;
-    const tipX = cx + Math.sin(rad)*len;
-    const tipY = cy - Math.cos(rad)*len;
-    const widthOffset = 34;
-    const perpX = Math.cos(rad)*widthOffset;
-    const perpY = Math.sin(rad)*widthOffset;
-    const c = colors[i % colors.length];
-    svg += `<path d="M${cx-perpX} ${cy-perpY} Q${cx} ${cy-len*0.55} ${tipX} ${tipY} Q${cx} ${cy-len*0.55} ${cx+perpX} ${cy+perpY} Z" fill="${c}"/>`;
-  }
-  svg += `</svg>`;
-  return svg;
-}
+const MARQUEE_ITEMS = ["Identidade Visual","Fotomontagem","Direção de Arte","Design Editorial","Ilustração Digital","Branding"];
+const track = document.getElementById('marqueeTrack');
+const marqueeHTML = MARQUEE_ITEMS.map(t => `<span>${t}</span>`).join('');
+track.innerHTML = marqueeHTML + marqueeHTML;
 
-document.getElementById('layerBack').innerHTML = makeFeatherFan(
-  ['#8B5CF6','#21B7AE','#2A1750'], 9, 780, 0.35
-);
-document.getElementById('layerMid').innerHTML = makeFeatherFan(
-  ['#F1502F','#FFC53D','#57B85B'], 7, 620, 0.5
-);
-document.getElementById('layerFront').innerHTML = makeFeatherFan(
-  ['#FFC53D','#F1502F'], 5, 460, 0.65
-);
-
-const layers = document.querySelectorAll('.feather-layer');
+/* =====================================================================
+   SWATCHES PARALLAX — as "amostras de cor" atrás do título movem-se
+   a velocidades diferentes no scroll, como uma parede de moodboard.
+   ===================================================================== */
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const chips = document.querySelectorAll('.hero-swatches .chip');
 
 if(!reduceMotion){
   let ticking = false;
@@ -693,9 +906,9 @@ if(!reduceMotion){
     if(!ticking){
       window.requestAnimationFrame(() => {
         const y = window.scrollY;
-        layers.forEach(layer => {
-          const speed = parseFloat(layer.dataset.speed);
-          layer.style.transform = `translate(-50%, calc(-50% + ${y*speed}px)) rotate(${y*speed*0.02}deg)`;
+        chips.forEach(chip => {
+          const depth = parseFloat(chip.dataset.depth) || 0.05;
+          chip.style.setProperty('--ty', `${y * depth}px`);
         });
         ticking = false;
       });
