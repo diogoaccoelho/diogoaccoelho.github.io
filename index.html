@@ -72,6 +72,12 @@ body{
   --raio-foco: 600px;
 }
 
+@media (max-width: 720px){
+  :root{
+    --raio-foco: 220px;
+  }
+}
+
 .foco-cor{
   position: fixed;
   inset: 0;
@@ -83,9 +89,7 @@ body{
   mask-image: radial-gradient(circle var(--raio-foco) at var(--cursor-x) var(--cursor-y), rgba(0,0,0,0) 0%, rgba(0,0,0,0) 55%, rgba(255,255,255,1) 100%);
 }
 
-@media (hover: none), (pointer: coarse){
-  .foco-cor{ display:none; }
-}
+
 
 img{ max-width:100%; display:block; }
 
@@ -1056,16 +1060,47 @@ footer{
 =========================================================== */
 (function(){
   var raiz = document.documentElement;
+  var foco = document.querySelector('.foco-cor');
 
+  function moverFoco(x, y){
+    raiz.style.setProperty('--cursor-x', x + 'px');
+    raiz.style.setProperty('--cursor-y', y + 'px');
+  }
+
+  // DESKTOP — segue o rato
   window.addEventListener('mousemove', function(e){
-    raiz.style.setProperty('--cursor-x', e.clientX + 'px');
-    raiz.style.setProperty('--cursor-y', e.clientY + 'px');
+    moverFoco(e.clientX, e.clientY);
   }, { passive: true });
 
+  // DESKTOP — ao sair da janela, esconde o foco
   document.addEventListener('mouseleave', function(){
-    raiz.style.setProperty('--cursor-x', '-9999px');
-    raiz.style.setProperty('--cursor-y', '-9999px');
+    moverFoco(-9999, -9999);
   });
+
+  // TELEMÓVEL — começa escondido
+  window.addEventListener('touchstart', function(e){
+    if(!e.touches.length) return;
+
+    var t = e.touches[0];
+    moverFoco(t.clientX, t.clientY);
+  }, { passive: true });
+
+  // TELEMÓVEL — acompanha o dedo
+  window.addEventListener('touchmove', function(e){
+    if(!e.touches.length) return;
+
+    var t = e.touches[0];
+    moverFoco(t.clientX, t.clientY);
+  }, { passive: true });
+
+  // TELEMÓVEL — ao levantar o dedo, esconde o foco
+  window.addEventListener('touchend', function(){
+    moverFoco(-9999, -9999);
+  }, { passive: true });
+
+  window.addEventListener('touchcancel', function(){
+    moverFoco(-9999, -9999);
+  }, { passive: true });
 })();
 
 /* ===========================================================
