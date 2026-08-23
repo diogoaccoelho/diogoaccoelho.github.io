@@ -201,58 +201,43 @@ h1,h2,h3{
 }
 
 /* ===========================================================
-   4b. BOLHAS DE ÁGUA — substituem as antigas manchas orgânicas.
-   São círculos de tamanhos variados, com um brilho no canto
-   (radial-gradient) para parecerem gotas/bolhas de água.
-   Cada uma tem:
-   - data-velocidade: intensidade do parallax ao fazer scroll
-   - data-esvaece: quão depressa desaparece (encolhe + desvanece)
-     ao fazer scroll para baixo — valores mais altos = desaparece
-     mais cedo, como uma bolha que rebenta primeiro.
-   Para adicionares mais bolhas, copia um <div class="bolha ...">
-   no HTML; para mudares o tom, troca a classe bolha--coral / sol /
-   menta / violeta.
+   4b. CAMPO DE ESTRELAS — substitui as antigas formas/bolhas do hero
+   por uma "noite estrelada": muitos pontos pequenos gerados por
+   JavaScript (ver função no <script>, no fim da página), cada um a
+   piscar de forma independente. Ao fazer scroll, o campo todo
+   desvanece-se e faz um leve parallax, como se o céu se dissolvesse.
+   Para ajustar a quantidade, muda a variável TOTAL no <script>.
 =========================================================== */
-/* .bolha é o CONTENTOR: só trata da posição, do parallax e do
-   encolher/desvanecer ao fazer scroll (via JS, em style.transform).
-   .bolha-nucleo é o círculo em si lá dentro: trata só da pulsação
-   contínua de zoom in/out (via CSS @keyframes). Ao separar os dois
-   níveis, as duas animações (scroll + pulsação) não entram em
-   conflito, porque cada uma mexe no transform do seu próprio elemento. */
-.bolha{
+/* .campo-estrelas ocupa toda a secção hero e é onde as estrelas
+   são inseridas por JavaScript (ver <script>, função gerarEstrelas).
+   .estrela é o CONTENTOR de cada estrela: só trata da posição, do
+   parallax e do desvanecer ao fazer scroll (via JS). .estrela-nucleo
+   é o pontinho em si: trata só do piscar contínuo (via CSS @keyframes),
+   com duração/atraso próprios definidos em --dur-piscar / --atraso-piscar. */
+.campo-estrelas{
   position:absolute;
+  inset:0;
   z-index:1;
+  overflow:hidden;
   pointer-events:none;
+}
+.estrela{
+  position:absolute;
   will-change: transform, opacity;
 }
-.bolha-nucleo{
+.estrela-nucleo{
   width:100%;
   height:100%;
   border-radius:50%;
-  backdrop-filter: blur(0.5px);
-  animation: pulsar-bolha ease-in-out infinite;
-  animation-duration: var(--dur-pulsar, 3.6s);
-  animation-delay: var(--atraso-pulsar, 0s);
+  background: var(--papel);
+  box-shadow: 0 0 4px rgba(253,251,245,.85), 0 0 9px rgba(253,251,245,.4);
+  animation: piscar-estrela ease-in-out infinite;
+  animation-duration: var(--dur-piscar, 2.6s);
+  animation-delay: var(--atraso-piscar, 0s);
 }
-@keyframes pulsar-bolha{
-  0%, 100%{ transform: scale(1); }
-  50%{ transform: scale(1.15); }
-}
-.bolha--coral .bolha-nucleo{
-  background: radial-gradient(circle at 32% 28%, rgba(255,255,255,.85), var(--coral) 55%, rgba(255,84,112,.35) 100%);
-  box-shadow: inset -6px -8px 18px rgba(150,20,50,.35), 0 12px 30px rgba(0,0,0,.18);
-}
-.bolha--sol .bolha-nucleo{
-  background: radial-gradient(circle at 32% 28%, rgba(255,255,255,.9), var(--sol) 55%, rgba(255,201,60,.35) 100%);
-  box-shadow: inset -6px -8px 18px rgba(180,120,0,.3), 0 12px 30px rgba(0,0,0,.18);
-}
-.bolha--menta .bolha-nucleo{
-  background: radial-gradient(circle at 32% 28%, rgba(255,255,255,.85), var(--menta) 55%, rgba(0,217,163,.35) 100%);
-  box-shadow: inset -6px -8px 18px rgba(0,110,80,.35), 0 12px 30px rgba(0,0,0,.18);
-}
-.bolha--violeta .bolha-nucleo{
-  background: radial-gradient(circle at 32% 28%, rgba(255,255,255,.8), var(--violeta) 55%, rgba(108,78,255,.35) 100%);
-  box-shadow: inset -6px -8px 18px rgba(50,30,150,.35), 0 12px 30px rgba(0,0,0,.18);
+@keyframes piscar-estrela{
+  0%, 100%{ opacity:.2; transform: scale(.6); }
+  50%{ opacity:1; transform: scale(1); }
 }
 
 /* formas decorativas com efeito parallax (movem-se ao fazer scroll) */
@@ -842,18 +827,12 @@ footer{
          no canto para parecerem gotas. data-velocidade controla o
          parallax; data-esvaece controla a rapidez a que desaparecem
          (encolhem + desvanecem) ao fazer scroll para baixo. -->
-    <div class="bolha bolha--coral"  style="width:70px;  height:70px;  top:14%; left:9%;"  data-velocidade="0.22" data-esvaece="1.4"><div class="bolha-nucleo" style="--dur-pulsar:3.2s; --atraso-pulsar:0s;"></div></div>
-    <div class="bolha bolha--sol"    style="width:150px; height:150px; top:62%; left:6%;"  data-velocidade="0.12" data-esvaece="0.7"><div class="bolha-nucleo" style="--dur-pulsar:4.8s; --atraso-pulsar:.6s;"></div></div>
-    <div class="bolha bolha--menta"  style="width:44px;  height:44px;  top:28%; left:19%;" data-velocidade="0.4"  data-esvaece="1.8"><div class="bolha-nucleo" style="--dur-pulsar:2.6s; --atraso-pulsar:1.1s;"></div></div>
-    <div class="bolha bolha--violeta" style="width:190px; height:190px; top:6%; left:76%;" data-velocidade="0.1"  data-esvaece="0.6"><div class="bolha-nucleo" style="--dur-pulsar:5.4s; --atraso-pulsar:.3s;"></div></div>
-    <div class="bolha bolha--coral"  style="width:90px;  height:90px;  top:52%; left:87%;" data-velocidade="0.3"  data-esvaece="1.1"><div class="bolha-nucleo" style="--dur-pulsar:3.8s; --atraso-pulsar:1.6s;"></div></div>
-    <div class="bolha bolha--sol"    style="width:36px;  height:36px;  top:80%; left:58%;" data-velocidade="0.5"  data-esvaece="2.0"><div class="bolha-nucleo" style="--dur-pulsar:2.2s; --atraso-pulsar:.8s;"></div></div>
-    <div class="bolha bolha--menta"  style="width:120px; height:120px; top:20%; left:52%;" data-velocidade="0.16" data-esvaece="0.9"><div class="bolha-nucleo" style="--dur-pulsar:4.2s; --atraso-pulsar:0s;"></div></div>
-    <div class="bolha bolha--violeta" style="width:58px; height:58px;  top:74%; left:30%;" data-velocidade="0.34" data-esvaece="1.5"><div class="bolha-nucleo" style="--dur-pulsar:3.0s; --atraso-pulsar:1.3s;"></div></div>
-    <div class="bolha bolha--coral"  style="width:160px; height:160px; top:38%; left:92%;" data-velocidade="0.08" data-esvaece="0.5"><div class="bolha-nucleo" style="--dur-pulsar:5.0s; --atraso-pulsar:2.0s;"></div></div>
-    <div class="bolha bolha--sol"    style="width:32px;  height:32px;  top:58%; left:44%;" data-velocidade="0.55" data-esvaece="2.2"><div class="bolha-nucleo" style="--dur-pulsar:2.0s; --atraso-pulsar:.4s;"></div></div>
-    <div class="bolha bolha--menta"  style="width:80px;  height:80px;  top:10%; left:38%;" data-velocidade="0.28" data-esvaece="1.2"><div class="bolha-nucleo" style="--dur-pulsar:3.6s; --atraso-pulsar:1.8s;"></div></div>
-    <div class="bolha bolha--violeta" style="width:50px; height:50px;  top:88%; left:14%;" data-velocidade="0.45" data-esvaece="1.7"><div class="bolha-nucleo" style="--dur-pulsar:2.8s; --atraso-pulsar:.9s;"></div></div>
+    <!-- CAMPO DE ESTRELAS — as estrelas são geradas por JavaScript
+         (ver função gerarEstrelas no <script> no fim da página), para
+         serem em maior quantidade sem encher o HTML manualmente.
+         Cada uma pisca de forma independente (CSS) e desvanece/faz
+         parallax ao fazer scroll (JS), tal como as antigas bolhas. -->
+    <div class="campo-estrelas" id="campoEstrelas"></div>
 
     <div class="hero-conteudo">
       <span class="hero-eyebrow">Design Gráfico &amp; Direção de Arte</span>
@@ -901,38 +880,42 @@ footer{
     </div>
 
     <div class="grelha">
-      <!-- Cada .item é um projeto. Troca apenas o src="" da imagem pela tua.
-           A altura do cartão passa a acompanhar a proporção real da imagem.
-           Se a imagem não existir/não carregar, mostra-se o gradiente com o título. -->
-      <div class="item" data-titulo="Marca A">
+      <!-- Cada .item é um projeto e tem DUAS imagens:
+           - src da <img>              → thumbnail, a que aparece no site
+           - data-imagem-grande="..."  → imagem que abre no visualizador
+             (lightbox) ao clicar. Coloca aqui o teu ficheiro de maior
+             qualidade/tamanho; se ainda não o tiveres, deixa como está
+             e o visualizador usa automaticamente o thumbnail.
+           A altura do cartão acompanha a proporção real do thumbnail. -->
+      <div class="item" data-titulo="Marca A" data-imagem-grande="trabalhos/projeto1-grande.jpg">
         <img src="trabalhos/projeto1.jpg" alt="Identidade Visual — Marca A" loading="lazy" onerror="this.closest('.item').classList.add('sem-imagem')">
         <div class="legenda"><h3>Marca A</h3><span>Branding</span></div>
       </div>
-      <div class="item" data-titulo="Revista B">
+      <div class="item" data-titulo="Revista B" data-imagem-grande="trabalhos/projeto2-grande.jpg">
         <img src="trabalhos/projeto2.jpg" alt="Editorial — Revista B" loading="lazy" onerror="this.closest('.item').classList.add('sem-imagem')">
         <div class="legenda"><h3>Revista B</h3><span>Editorial</span></div>
       </div>
-      <div class="item" data-titulo="Festival C">
+      <div class="item" data-titulo="Festival C" data-imagem-grande="trabalhos/projeto3-grande.jpg">
         <img src="trabalhos/projeto3.jpg" alt="Cartaz — Festival C" loading="lazy" onerror="this.closest('.item').classList.add('sem-imagem')">
         <div class="legenda"><h3>Festival C</h3><span>Ilustração</span></div>
       </div>
-      <div class="item" data-titulo="Produto D">
+      <div class="item" data-titulo="Produto D" data-imagem-grande="trabalhos/projeto4-grande.jpg">
         <img src="trabalhos/projeto4.jpg" alt="Embalagem — Produto D" loading="lazy" onerror="this.closest('.item').classList.add('sem-imagem')">
         <div class="legenda"><h3>Produto D</h3><span>Packaging</span></div>
       </div>
-      <div class="item" data-titulo="Marca E">
+      <div class="item" data-titulo="Marca E" data-imagem-grande="trabalhos/projeto5-grande.jpg">
         <img src="trabalhos/projeto5.jpg" alt="Campanha — Marca E" loading="lazy" onerror="this.closest('.item').classList.add('sem-imagem')">
         <div class="legenda"><h3>Marca E</h3><span>Direção de Arte</span></div>
       </div>
-      <div class="item" data-titulo="Projeto F">
+      <div class="item" data-titulo="Projeto F" data-imagem-grande="trabalhos/projeto6-grande.jpg">
         <img src="trabalhos/projeto6.jpg" alt="App — Projeto F" loading="lazy" onerror="this.closest('.item').classList.add('sem-imagem')">
         <div class="legenda"><h3>Projeto F</h3><span>UI Design</span></div>
       </div>
-      <div class="item" data-titulo="Marca G">
+      <div class="item" data-titulo="Marca G" data-imagem-grande="trabalhos/projeto7grande.jpg">
         <img src="trabalhos/projeto7.jpg" alt="Identidade Visual — Marca G" loading="lazy" onerror="this.closest('.item').classList.add('sem-imagem')">
         <div class="legenda"><h3>Marca G</h3><span>Branding</span></div>
       </div>
-      <div class="item" data-titulo="Revista H">
+      <div class="item" data-titulo="Revista H" data-imagem-grande="trabalhos/projeto8grande.jpg">
         <img src="trabalhos/projeto8.jpg" alt="Editorial — Revista H" loading="lazy" onerror="this.closest('.item').classList.add('sem-imagem')">
         <div class="legenda"><h3>Revista H</h3><span>Editorial</span></div>
       </div>
@@ -940,54 +923,55 @@ footer{
 
     <!-- CARROSSEL — faixa de thumbnails mais pequenos. Anda sozinho,
          sem barra de scroll manual. Clicar em qualquer um deles abre
-         o mesmo visualizador (lightbox) dos cartões grandes.
-         Para adicionar mais, basta copiar um .carrossel-item. -->
+         o mesmo visualizador (lightbox) dos cartões grandes, usando
+         a respetiva data-imagem-grande. Para adicionar mais, basta
+         copiar um .carrossel-item. -->
     <div class="carrossel-wrap revela">
       <div class="carrossel-titulo">Explorar tudo</div>
       <div class="carrossel" id="carrossel">
-        <div class="carrossel-item" data-titulo="Marca A">
+        <div class="carrossel-item" data-titulo="Marca A" data-imagem-grande="trabalhos/projeto1-grande.jpg">
           <img src="trabalhos/projeto1.jpg" alt="Identidade Visual — Marca A" loading="lazy" onerror="this.closest('.carrossel-item').classList.add('sem-imagem')">
         </div>
-        <div class="carrossel-item" data-titulo="Revista B">
+        <div class="carrossel-item" data-titulo="Revista B" data-imagem-grande="trabalhos/projeto2-grande.jpg">
           <img src="trabalhos/projeto2.jpg" alt="Editorial — Revista B" loading="lazy" onerror="this.closest('.carrossel-item').classList.add('sem-imagem')">
         </div>
-        <div class="carrossel-item" data-titulo="Festival C">
+        <div class="carrossel-item" data-titulo="Festival C" data-imagem-grande="trabalhos/projeto3-grande.jpg">
           <img src="trabalhos/projeto3.jpg" alt="Cartaz — Festival C" loading="lazy" onerror="this.closest('.carrossel-item').classList.add('sem-imagem')">
         </div>
-        <div class="carrossel-item" data-titulo="Produto D">
+        <div class="carrossel-item" data-titulo="Produto D" data-imagem-grande="trabalhos/projeto4-grande.jpg">
           <img src="trabalhos/projeto4.jpg" alt="Embalagem — Produto D" loading="lazy" onerror="this.closest('.carrossel-item').classList.add('sem-imagem')">
         </div>
-        <div class="carrossel-item" data-titulo="Marca E">
+        <div class="carrossel-item" data-titulo="Marca E" data-imagem-grande="trabalhos/projeto5-grande.jpg">
           <img src="trabalhos/projeto5.jpg" alt="Campanha — Marca E" loading="lazy" onerror="this.closest('.carrossel-item').classList.add('sem-imagem')">
         </div>
-        <div class="carrossel-item" data-titulo="Projeto F">
+        <div class="carrossel-item" data-titulo="Projeto F" data-imagem-grande="trabalhos/projeto6-grande.jpg">
           <img src="trabalhos/projeto6.jpg" alt="App — Projeto F" loading="lazy" onerror="this.closest('.carrossel-item').classList.add('sem-imagem')">
         </div>
-        <div class="carrossel-item" data-titulo="Marca G">
+        <div class="carrossel-item" data-titulo="Marca G" data-imagem-grande="trabalhos/projeto7-grande.jpg">
           <img src="trabalhos/projeto7.jpg" alt="Identidade Visual — Marca G" loading="lazy" onerror="this.closest('.carrossel-item').classList.add('sem-imagem')">
         </div>
-        <div class="carrossel-item" data-titulo="Revista H">
+        <div class="carrossel-item" data-titulo="Revista H" data-imagem-grande="trabalhos/projeto8-grande.jpg">
           <img src="trabalhos/projeto8.jpg" alt="Editorial — Revista H" loading="lazy" onerror="this.closest('.carrossel-item').classList.add('sem-imagem')">
         </div>
-        <div class="carrossel-item" data-titulo="Evento I">
+        <div class="carrossel-item" data-titulo="Evento I" data-imagem-grande="trabalhos/projeto9-grande.jpg">
           <img src="trabalhos/projeto9.jpg" alt="Cartaz — Evento I" loading="lazy" onerror="this.closest('.carrossel-item').classList.add('sem-imagem')">
         </div>
-        <div class="carrossel-item" data-titulo="Marca J">
+        <div class="carrossel-item" data-titulo="Marca J" data-imagem-grande="trabalhos/projeto10-grande.jpg">
           <img src="trabalhos/projeto10.jpg" alt="Identidade Visual — Marca J" loading="lazy" onerror="this.closest('.carrossel-item').classList.add('sem-imagem')">
         </div>
-        <div class="carrossel-item" data-titulo="Revista K">
+        <div class="carrossel-item" data-titulo="Revista K" data-imagem-grande="trabalhos/projeto11-grande.jpg">
           <img src="trabalhos/projeto11.jpg" alt="Editorial — Revista K" loading="lazy" onerror="this.closest('.carrossel-item').classList.add('sem-imagem')">
         </div>
-        <div class="carrossel-item" data-titulo="Festival L">
+        <div class="carrossel-item" data-titulo="Festival L" data-imagem-grande="trabalhos/projeto12-grande.jpg">
           <img src="trabalhos/projeto12.jpg" alt="Cartaz — Festival L" loading="lazy" onerror="this.closest('.carrossel-item').classList.add('sem-imagem')">
         </div>
-        <div class="carrossel-item" data-titulo="Produto M">
+        <div class="carrossel-item" data-titulo="Produto M" data-imagem-grande="trabalhos/projeto13-grande.jpg">
           <img src="trabalhos/projeto13.jpg" alt="Embalagem — Produto M" loading="lazy" onerror="this.closest('.carrossel-item').classList.add('sem-imagem')">
         </div>
-        <div class="carrossel-item" data-titulo="Marca N">
+        <div class="carrossel-item" data-titulo="Marca N" data-imagem-grande="trabalhos/projeto14-grande.jpg">
           <img src="trabalhos/projeto14.jpg" alt="Campanha — Marca N" loading="lazy" onerror="this.closest('.carrossel-item').classList.add('sem-imagem')">
         </div>
-        <div class="carrossel-item" data-titulo="Projeto O">
+        <div class="carrossel-item" data-titulo="Projeto O" data-imagem-grande="trabalhos/projeto15-grande.jpg">
           <img src="trabalhos/projeto15.jpg" alt="App — Projeto O" loading="lazy" onerror="this.closest('.carrossel-item').classList.add('sem-imagem')">
         </div>
       </div>
@@ -1025,39 +1009,79 @@ footer{
 
 <script>
 /* ===========================================================
-   BOLHAS DE ÁGUA — parallax + desaparecimento ao fazer scroll.
-   Cada bolha sobe/desce ligeiramente com o scroll (parallax,
-   controlado por data-velocidade) e ao mesmo tempo encolhe e
-   desvanece-se, como uma bolha de água que rebenta, à medida que
-   se faz scroll para baixo (controlado por data-esvaece: valores
-   mais altos desaparecem mais depressa/cedo).
+   CAMPO DE ESTRELAS — gera as estrelas dinamicamente (posição,
+   tamanho, velocidade de parallax e ritmo de piscar aleatórios),
+   para conseguir uma noite estrelada com muitos pontos sem ter de
+   os escrever um a um no HTML. Para mudar a quantidade, ajusta TOTAL.
+=========================================================== */
+(function(){
+  var campo = document.getElementById('campoEstrelas');
+  if(!campo) return;
+
+  var TOTAL = 70;
+
+  for(var i = 0; i < TOTAL; i++){
+    var estrela = document.createElement('div');
+    estrela.className = 'estrela';
+
+    // a maioria são pontinhos discretos; algumas (12%) são "estrelas
+    // brilhantes", um pouco maiores, para dar profundidade ao céu
+    var brilhante = Math.random() < 0.12;
+    var tamanho = brilhante
+      ? (Math.random() * 2 + 3)   // 3px a 5px
+      : (Math.random() * 2 + 1);  // 1px a 3px
+
+    estrela.style.width = tamanho.toFixed(1) + 'px';
+    estrela.style.height = tamanho.toFixed(1) + 'px';
+    estrela.style.top = (Math.random() * 92 + 3).toFixed(1) + '%';
+    estrela.style.left = (Math.random() * 94 + 3).toFixed(1) + '%';
+    estrela.dataset.velocidade = (Math.random() * 0.45 + 0.05).toFixed(2);
+    estrela.dataset.esvaece = (Math.random() * 1.7 + 0.5).toFixed(2);
+
+    var nucleo = document.createElement('div');
+    nucleo.className = 'estrela-nucleo';
+    nucleo.style.setProperty('--dur-piscar', (Math.random() * 3 + 1.5).toFixed(1) + 's');
+    nucleo.style.setProperty('--atraso-piscar', (Math.random() * 4).toFixed(1) + 's');
+
+    estrela.appendChild(nucleo);
+    campo.appendChild(estrela);
+  }
+})();
+
+/* ===========================================================
+   ESTRELAS — parallax + desaparecimento ao fazer scroll.
+   Cada estrela sobe/desce ligeiramente com o scroll (parallax,
+   controlado por data-velocidade) e ao mesmo tempo desvanece-se,
+   como se o céu estrelado se dissolvesse à medida que se faz
+   scroll para baixo (controlado por data-esvaece: valores mais
+   altos desaparecem mais depressa/cedo). O piscar contínuo em si
+   é feito à parte, em CSS, no elemento .estrela-nucleo.
 =========================================================== */
 (function(){
   var reduzMovimento = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if(reduzMovimento) return;
 
-  var bolhas = document.querySelectorAll('.bolha');
+  var estrelas = document.querySelectorAll('.estrela');
   var ticking = false;
 
   function atualizar(){
     var scrollY = window.scrollY;
     var vh = window.innerHeight;
 
-    bolhas.forEach(function(bolha){
-      var velocidade = parseFloat(bolha.getAttribute('data-velocidade')) || 0.2;
-      var esvaece = parseFloat(bolha.getAttribute('data-esvaece')) || 1;
+    estrelas.forEach(function(estrela){
+      var velocidade = parseFloat(estrela.dataset.velocidade) || 0.2;
+      var esvaece = parseFloat(estrela.dataset.esvaece) || 1;
 
       /* progresso de 0 a 1 dentro do alcance de desaparecimento desta
-         bolha — quanto maior o data-esvaece, mais cedo chega a 1 */
+         estrela — quanto maior o data-esvaece, mais cedo chega a 1 */
       var alcance = vh * 0.85 / esvaece;
       var progresso = Math.min(scrollY / alcance, 1);
 
       var opacidade = 1 - progresso;
-      var escala = 1 - progresso * 0.85; /* encolhe até quase desaparecer */
       var deslocamento = scrollY * velocidade;
 
-      bolha.style.opacity = opacidade;
-      bolha.style.transform = 'translateY(' + deslocamento + 'px) scale(' + escala + ')';
+      estrela.style.opacity = opacidade;
+      estrela.style.transform = 'translateY(' + deslocamento + 'px)';
     });
 
     ticking = false;
@@ -1135,18 +1159,34 @@ footer{
   // grandes como para os thumbnails do carrossel — incluindo os que
   // são clonados dinamicamente pelo carrossel automático (ver mais
   // abaixo), sem ser preciso voltar a ligar clique a cada clone.
+  //
+  // Cada cartão tem DUAS imagens: o thumbnail (a <img> visível no
+  // site) e a "imagem grande" (data-imagem-grande), que é a que
+  // este visualizador mostra ao clicar. Se a imagem grande ainda
+  // não existir/não carregar, mostra-se o thumbnail em alternativa,
+  // para nunca ficar vazio.
   document.body.addEventListener('click', function(e){
     var gatilho = e.target.closest('.item, .carrossel-item');
     if(!gatilho) return;
 
     var imgOriginal = gatilho.querySelector('img');
+    var srcGrande = gatilho.dataset.imagemGrande;
     caixa.innerHTML = '';
     imgAtual = null;
 
     if(imgOriginal && !gatilho.classList.contains('sem-imagem')){
       var img = document.createElement('img');
-      img.src = imgOriginal.src;
       img.alt = imgOriginal.alt;
+      // tenta primeiro a imagem grande; se falhar a carregar
+      // (ainda não foi colocada, caminho errado, etc.), cai
+      // automaticamente para o thumbnail
+      img.onerror = function(){
+        if(img.src.indexOf(imgOriginal.src) === -1){
+          img.onerror = null;
+          img.src = imgOriginal.src;
+        }
+      };
+      img.src = srcGrande || imgOriginal.src;
       caixa.appendChild(img);
       imgAtual = img;
     }
