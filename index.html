@@ -50,6 +50,41 @@ body{
   color: var(--tinta);
   font-family: var(--font-body);
   overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* ===========================================================
+   1b. EFEITO PRETO & BRANCO COM "FOCO" DE COR À VOLTA DO RATO
+   .foco-cor é uma camada fixa que cobre a página toda e aplica
+   backdrop-filter: grayscale(1) a tudo o que está por baixo dela
+   — por isso o site aparece inteiro a preto e branco. Essa camada
+   tem um "buraco" circular, sempre centrado na posição atual do
+   rato (feito com uma máscara em radial-gradient): dentro do
+   buraco a camada desaparece e deixa ver a cor original por baixo,
+   como se fosse uma lanterna; fora dele mantém-se a preto e branco.
+   O JS (ver <script>) só atualiza as variáveis --cursor-x/--cursor-y
+   consoante o rato se mexe. Em ecrãs táteis (sem "hover" real) a
+   camada é desligada, para o site aparecer sempre a cores.
+=========================================================== */
+:root{
+  --cursor-x: -9999px;
+  --cursor-y: -9999px;
+  --raio-foco: 600px;
+}
+
+.foco-cor{
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  -webkit-backdrop-filter: grayscale(1);
+  backdrop-filter: grayscale(1);
+  -webkit-mask-image: radial-gradient(circle var(--raio-foco) at var(--cursor-x) var(--cursor-y), rgba(0,0,0,0) 0%, rgba(0,0,0,0) 55%, rgba(255,255,255,1) 100%);
+  mask-image: radial-gradient(circle var(--raio-foco) at var(--cursor-x) var(--cursor-y), rgba(0,0,0,0) 0%, rgba(0,0,0,0) 55%, rgba(255,255,255,1) 100%);
+}
+
+@media (hover: none), (pointer: coarse){
+  .foco-cor{ display:none; }
 }
 
 img{ max-width:100%; display:block; }
@@ -788,6 +823,9 @@ footer{
 </head>
 <body>
 
+<!-- Camada do efeito P&B -> cor à volta do rato -->
+<div class="foco-cor" aria-hidden="true"></div>
+
 <!-- Barra lateral esquerda -->
 <div class="barra-lateral esquerda">
   <div class="swatch"></div>
@@ -1008,6 +1046,28 @@ footer{
 </div>
 
 <script>
+/* ===========================================================
+   FOCO DE COR — segue o rato e atualiza as variáveis CSS
+   --cursor-x / --cursor-y, usadas pela máscara em .foco-cor
+   (ver CSS) para posicionar o "buraco" circular que revela a
+   cor por baixo da camada a preto e branco. Ao sair da janela,
+   a posição volta para fora do ecrã, para o buraco desaparecer
+   e o site voltar a ficar todo a preto e branco.
+=========================================================== */
+(function(){
+  var raiz = document.documentElement;
+
+  window.addEventListener('mousemove', function(e){
+    raiz.style.setProperty('--cursor-x', e.clientX + 'px');
+    raiz.style.setProperty('--cursor-y', e.clientY + 'px');
+  }, { passive: true });
+
+  document.addEventListener('mouseleave', function(){
+    raiz.style.setProperty('--cursor-x', '-9999px');
+    raiz.style.setProperty('--cursor-y', '-9999px');
+  });
+})();
+
 /* ===========================================================
    CAMPO DE ESTRELAS — gera as estrelas dinamicamente (posição,
    tamanho, velocidade de parallax e ritmo de piscar aleatórios),
